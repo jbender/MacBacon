@@ -323,6 +323,8 @@ module Bacon
         args.unshift(name)
         init_context(args.join(' '), @context_depth + 1, @before, @after, &block)
       end
+
+      alias_method :context, :describe
     end
   end # Context
 
