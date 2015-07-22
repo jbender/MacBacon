@@ -8,7 +8,7 @@ Bacon is a small RSpec clone weighing less than 350 LoC but
 nevertheless providing all essential features.
 
 This MacBacon fork is created and maintained by Eloy Durán (@alloy).
-It differs with regular Bacon in that it operates properly in a
+It differs from regular Bacon in that it operates properly in a
 NSRunloop based environment. I.e. MacRuby/Objective-C. See the
 Objective-C runloop macros section for more info.
 
