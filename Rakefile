@@ -32,10 +32,6 @@ def git_tree_version
   @tree_version
 end
 
-def gem_version
-  git_tree_version.gsub(/-.*/, '')
-end
-
 def release
   "macbacon-#{git_tree_version}"
 end
@@ -82,57 +78,6 @@ task :test do
   sh "macruby -Ilib bin/macbacon --automatic --quiet"
 end
 
-
-begin
-  $" << "sources"  if defined? FromSrc
-  require 'rubygems'
-
-  require 'rake'
-  require 'rake/clean'
-  require 'rake/packagetask'
-  require 'rake/gempackagetask'
-  require 'fileutils'
-rescue LoadError
-  # Too bad.
-else
-  spec = Gem::Specification.new do |s|
-    s.name            = "mac_bacon"
-    s.version         = gem_version
-    s.platform        = Gem::Platform::RUBY
-    s.summary         = "a small RSpec clone for MacRuby"
-
-    s.description = <<-EOF
-Bacon is a small RSpec clone weighing less than 350 LoC but
-nevertheless providing all essential features.
-
-This MacBacon fork differs with regular Bacon in that it operates
-properly in a NSRunloop based environment. I.e. MacRuby/Objective-C.
-
-https://github.com/alloy/MacBacon
-    EOF
-
-    s.files           = manifest + %w(RDOX ChangeLog)
-    s.bindir          = 'bin'
-    s.executables     << 'macbacon'
-    s.require_path    = 'lib'
-    s.has_rdoc        = true
-    s.extra_rdoc_files = ['README.md', 'RDOX']
-    s.test_files      = []
-
-    s.author          = 'Eloy Durán'
-    s.email           = 'eloy.de.enige@gmail.com'
-    s.homepage        = 'https://github.com/alloy/MacBacon'
-  end
-
-  #task :gem => [:chmod, :changelog]
-  task :gem => [:chmod]
-
-  Rake::GemPackageTask.new(spec) do |p|
-    p.gem_spec = spec
-    p.need_tar = false
-    p.need_zip = false
-  end
-end
 
 desc "Generate RDoc documentation"
 Rake::RDocTask.new(:rdoc) do |rdoc|
