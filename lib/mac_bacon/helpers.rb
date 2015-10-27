@@ -57,8 +57,4 @@ module Bacon
       top_level_objects
     end
   end
-
-  class Context
-    include Helpers
-  end
 end
